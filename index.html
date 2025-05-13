@@ -2,73 +2,92 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Nieuwszoekmachine</title>
+  <title>Nieuwszoekmachine (meerdere RSS-feeds)</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f4f4f4; }
+    h1 { margin-bottom: 1rem; }
+    input, button { padding: 0.5rem; margin-right: 0.5rem; }
+    ul { list-style: none; padding: 0; }
+    li { background: #fff; margin: 0.5rem 0; padding: 1rem; border-radius: 6px; }
+    a { text-decoration: none; color: #007bff; }
+    a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-  <h1>Laatste nieuws</h1>
-  
-  <!-- Zoekbalk en knop -->
-  <label for="zoek-term">Zoek naar nieuws:</label>
-  <input type="text" id="zoek-term" placeholder="Zoek op titel...">
-  <button onclick="zoekNieuws()">Zoek</button>
-
-  <ul id="nieuws-lijst"></ul>
+  <h1>Nieuwszoeker</h1>
+  <input type="text" id="zoek-term" placeholder="Zoek op titel…">
+  <button id="zoek-btn">Zoek</button>
+  <ul id="nieuws-lijst"><li>Laden…</li></ul>
 
   <script>
+    // Je eigen rss2json API-key
+    const API_KEY = 'teap2d95fzklnn2olrrvuht3zsezaxkdzjejtoer';
+
+    // Alle RSS-feeds die je wilt combineren
+    const feeds = [
+      'https://www.ad.nl/home/rss.xml',
+      'https://feeds.nos.nl/nosnieuwsalgemeen',
+      'https://www.rtlnieuws.nl/rss/rtl-nieuws/index.xml',
+      'https://www.bright.nl/pagina/rss-feeds',      // kies de juiste sub-feed
+      'https://feeds.feedburner.com/tweakers/nieuws'
+    ];
+
+    const lijst = document.getElementById('nieuws-lijst');
     let origineleItems = [];
 
-    async function laadRSS() {
-      const proxyUrl = 'https://api.allorigins.win/get?url=';
-      const feedUrl = encodeURIComponent('https://www.ad.nl/home/rss.xml');
-      try {
-        const response = await fetch(`${proxyUrl}${feedUrl}`);
-        const data = await response.json();
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(data.contents, "application/xml");
-        const items = xml.querySelectorAll("item");
-        const lijst = document.getElementById("nieuws-lijst");
-        origineleItems = []; // Reset de originele lijst
-        items.forEach(item => {
-          const titel = item.querySelector("title").textContent;
-          const link = item.querySelector("link").textContent;
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.href = link;
-          a.textContent = titel;
-          a.target = "_blank";
-          li.appendChild(a);
-          lijst.appendChild(li);
-
-          // Voeg het item toe aan origineleItems voor later gebruik
-          origineleItems.push({ titel, link });
-        });
-      } catch (error) {
-        console.error("Fout bij het laden van de RSS-feed:", error);
+    // Toon een lijst van items
+    function toonItems(items) {
+      if (!items.length) {
+        lijst.innerHTML = '<li>Geen artikelen gevonden.</li>';
+        return;
       }
-    }
-
-    // Functie om door nieuws te zoeken
-    function zoekNieuws() {
-      const zoekTerm = document.getElementById("zoek-term").value.toLowerCase();
-      const lijst = document.getElementById("nieuws-lijst");
-      lijst.innerHTML = ''; // Maak de lijst leeg
-
-      // Filter de items op zoekterm
-      const gefilterdeItems = origineleItems.filter(item => item.titel.toLowerCase().includes(zoekTerm));
-
-      // Toon de gefilterde items
-      gefilterdeItems.forEach(item => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = item.link;
-        a.textContent = item.titel;
-        a.target = "_blank";
-        li.appendChild(a);
+      lijst.innerHTML = '';
+      items.forEach(({ titel, link }) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="${link}" target="_blank">${titel}</a>`;
         lijst.appendChild(li);
       });
     }
 
-    laadRSS(); // Laad de RSS-feed bij het starten
+    // Laad en combineer alle feeds
+    async function laadAlleFeeds() {
+      origineleItems = [];
+      lijst.innerHTML = '<li>Laden…</li>';
+
+      for (const feedUrl of feeds) {
+        const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&api_key=${API_KEY}`;
+        try {
+          const res  = await fetch(url);
+          const json = await res.json();
+          if (json.status === 'ok' && Array.isArray(json.items)) {
+            json.items.forEach(item => {
+              origineleItems.push({
+                titel: item.title,
+                link:  item.link
+              });
+            });
+          }
+        } catch (err) {
+          console.error(`Fout bij laden feed ${feedUrl}:`, err);
+        }
+      }
+
+      // Sorteer op titel (optioneel) en toon
+      origineleItems.sort((a, b) => a.titel.localeCompare(b.titel));
+      toonItems(origineleItems);
+    }
+
+    // Zoekfunctionaliteit
+    document.getElementById('zoek-btn').addEventListener('click', () => {
+      const term = document.getElementById('zoek-term').value.toLowerCase();
+      const gefilterd = origineleItems.filter(({ titel }) =>
+        titel.toLowerCase().includes(term)
+      );
+      toonItems(gefilterd);
+    });
+
+    // Start laden
+    laadAlleFeeds();
   </script>
 </body>
 </html>
