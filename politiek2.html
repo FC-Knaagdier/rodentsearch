@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+   <meta charset="utf-8">
+</head>
+<body>
+    <h1>Vraag 2</h1> 
+<p>We weten dat Mark nu gemiddeld 5 smsjes per dag verwijdert. Stel hij doet dit niet. Hoeveel houdt hij er dan over.</p>
+<textarea id="Vraag" style="float: left;"></textarea><p>smsjes</p><br>
+    <button id="Antwoordknop" onclick="Antwoord()">Antwoord</button>
+    <button id="VolgendeVraag" style="display: none;"><a href="politiek3.html">Volgende vraag</a></button>
+    <p id="Antwoord"></p>
+    <script>
+    function Antwoord() {
+    var vraag = document.getElementById('Vraag').value.trim();
+    var Antwoord = document.getElementById('Antwoord');
+    if (vraag === '') {
+      Antwoord.innerHTML = '';
+    } else if (parseInt(vraag) === 70) {
+      Antwoord.innerHTML = 'Klopt. Dit is duidelijk de reden dat we niks wisten over de toeslagenaffaire.';
+      document.getElementById('VolgendeVraag').style.display = 'block';
+      document.getElementById('Antwoordknop').style.display = 'none';
+    } else {
+      Antwoord.innerHTML = 'Een foutje moet kunnen. Maar een goede actvist checkt zijn werk. Anders neemt niemand hem meer serieus';
+    }
+    }
+    </script>
+    </body>
+    </html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+   <meta charset="utf-8">
+</head>
+<body>
+    <h1>Vraag 1</h1> 
+<p>Mark de Bever krijgt gemiddeld 10 smsjes per dag. Hij verwijderd er gemiddeld 5 per dag. Hoeveel houdt hij er na een week over.</p>
+<textarea id="Vraag" style="float: left;"></textarea><p> smsjes</p><br>
+    <button id="Antwoordknop" onclick="Antwoord()">Antwoord</button>
+    <button id="VolgendeVraag" style="display: none;"><a href="politiek2.html">Volgende vraag</a></button>
+    <p id="Antwoord"></p>
+    <script>
+    function Antwoord() {
+    var vraag = document.getElementById('Vraag').value.trim();
+    var Antwoord = document.getElementById('Antwoord');
+    if (vraag === '') {
+      Antwoord.innerHTML = '';
+    } else if (parseInt(vraag) === 35) {
+      Antwoord.innerHTML = 'Klopt. Kan dit de oorzaak zijn dat we niks wisten over de toeslahen affaire.';
+      document.getElementById('VolgendeVraag').style.display = 'block';
+      document.getElementById('Antwoordknop').style.display = 'none';
+    } else {
+      Antwoord.innerHTML = 'Een foutje moet kunnen. Maar een goede actvist checkt zijn werk. Anders neemt niemand hem meer serieus';
+    }
+    }
+    </script>
+    </body>
+    </html>

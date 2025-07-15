@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+   <meta charset="utf-8">
+</head>
+<body>
+    <h1>Vraag 5</h1> 
+<p style="font-size: 40px;">Stel je hebt een relatie en je neemt een kind. Een kind kost gemiddeld €912 volgens geldzaken.nl. Je krijgt maandelijk €291,49 kinderbijslag van de SVB tot je kind 5 jaar is. Hoeveel kost het kind in die periode per maand. Afgerond op hele getallen</p>
+<textarea id="Vraag" style="height: fit-content; width: 100px; float: left;"></textarea> <p> euro</p><br>
+    <button id="Antwoordknop" onclick="Antwoord()">Antwoord</button>
+    <button id="VolgendeVraag" style="display: none;"><a href="index.html">Volgende vraag</a></button>
+    <p id="Antwoord"></p>
+    <script>
+    function Antwoord() {
+    var vraag = document.getElementById('Vraag').value.trim();
+    var Antwoord = document.getElementById('Antwoord');
+    if (vraag === '') {
+      Antwoord.innerHTML = '';
+    } else if (parseInt(vraag) === 620) {
+      Antwoord.innerHTML = 'Klopt. Veel hé. Ik snap wel dat knaagdieren geen kinderen willen.';
+      document.getElementById('VolgendeVraag').style.display = 'block';
+      document.getElementById('Antwoordknop').style.display = 'none';
+    } else {
+      Antwoord.innerHTML = 'Een foutje moet kunnen. Maar een goede actvist checkt zijn werk. Anders neemt niemand hem meer serieus';
+    }
+    }
+    </script>
+    </body>
+    </html>

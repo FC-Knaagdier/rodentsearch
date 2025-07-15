@@ -1,121 +1,16 @@
 <!DOCTYPE html>
-<html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <title>Nieuwszoekmachine (meerdere RSS-feeds)</title>
-  <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f4f4f4; }
-    h1 { margin-bottom: 50px; }
-    input, button { padding: 0.5rem; margin-right: 0.5rem; }
-    ul { list-style: none; padding: 0; }
-    li { background: #fff; margin: 0.5rem 0; padding: 1rem; border-radius: 6px; }
-    a { text-decoration: none; color: #007bff; }
-    a:hover { text-decoration: underline; }
-
-/* Zoekbalk 100% breed en 200px hoog */
-#zoek-term {
-  width: 100%;
-  height: 200px;
-  font-size: 100px;
-  padding: 0.5rem;
-  box-sizing: border-box;
-}
-
-/* Knop 100×100 pixels */
-#zoek-btn {
-  width: 100%;
-  height: 100px;
-  font-size: 50px;
-  cursor: pointer;
-}
-/* Maak de linktekst in de resultatenlijst groter */
-#nieuws-lijst li a {
-  font-size: 2rem;        /* pas aan naar wens */
-  line-height: 1.4;        /* zorgt voor prettige leesbaarheid */
-}
-
-/* Eventueel extra ruimte onder elke link */
-#nieuws-lijst li {
-  margin-bottom: 1.5rem;
-}
-
-  </style>
-</head>
-<body>
-  <h1 font-size: 50px;>Rodentsearch</h1>
-  <input type="text" id="zoek-term" placeholder="Zoek op titel…">
-  <button id="zoek-btn">Zoek</button>
-  <ul id="nieuws-lijst"><li>Laden…</li></ul>
-
-  <script>
-    // Je eigen rss2json API-key
-    const API_KEY = 'teap2d95fzklnn2olrrvuht3zsezaxkdzjejtoer';
-
-    // Alle RSS-feeds die je wilt combineren
-    const feeds = [
-      'https://www.ad.nl/home/rss.xml',
-      'https://feeds.nos.nl/nosnieuwsalgemeen',
-      'https://www.rtlnieuws.nl/rss/rtl-nieuws/index.xml',
-      'https://www.bright.nl/pagina/rss-feeds',      // kies de juiste sub-feed
-      'https://feeds.feedburner.com/tweakers/nieuws'
-    ];
-
-    const lijst = document.getElementById('nieuws-lijst');
-    let origineleItems = [];
-
-    // Toon een lijst van items
-    function toonItems(items) {
-      if (!items.length) {
-        lijst.innerHTML = '<li>Geen artikelen gevonden.</li>';
-        return;
-      }
-      lijst.innerHTML = '';
-      items.forEach(({ titel, link }) => {
-        const li = document.createElement('li');
-        li.innerHTML = `<a href="${link}" target="_blank">${titel}</a>`;
-        lijst.appendChild(li);
-      });
-    }
-
-    // Laad en combineer alle feeds
-    async function laadAlleFeeds() {
-      origineleItems = [];
-      lijst.innerHTML = '<li>Laden…</li>';
-
-      for (const feedUrl of feeds) {
-        const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&api_key=${API_KEY}`;
-        try {
-          const res  = await fetch(url);
-          const json = await res.json();
-          if (json.status === 'ok' && Array.isArray(json.items)) {
-            json.items.forEach(item => {
-              origineleItems.push({
-                titel: item.title,
-                link:  item.link
-              });
-            });
-          }
-        } catch (err) {
-          console.error(`Fout bij laden feed ${feedUrl}:`, err);
-        }
-      }
-
-      // Sorteer op titel (optioneel) en toon
-      origineleItems.sort((a, b) => a.titel.localeCompare(b.titel));
-      toonItems(origineleItems);
-    }
-
-    // Zoekfunctionaliteit
-    document.getElementById('zoek-btn').addEventListener('click', () => {
-      const term = document.getElementById('zoek-term').value.toLowerCase();
-      const gefilterd = origineleItems.filter(({ titel }) =>
-        titel.toLowerCase().includes(term)
-      );
-      toonItems(gefilterd);
-    });
-
-    // Start laden
-    laadAlleFeeds();
-  </script>
-</body>
-</html>
+    <mata lang="nl"></mata>
+   <meta charset="utf-8">
+   </head>
+   <body>
+    <h1>Categorieen</h1> 
+    <p style="font-size: 40px;">Je traint hier om activist te worden. Om je te leren dat kennis belangrijker is in het vak dan design (daar heb je Wordpress voor) heb ik mij gefocust op de inhoud.</p> 
+    <ul style="font-size: 60px;">
+        <li><a href="politiek1.html">Politiek</a></li>
+        <li><a href="bigtech1.html">Big tech</a></li>
+        <li><a href="socialmedia1.html">Social media</a></li>
+        <li><a href="games1.html">Games</a></li>
+        </ul>
+    </body>
+    </html>

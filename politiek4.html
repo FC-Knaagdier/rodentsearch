@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+   <meta charset="utf-8">
+</head>
+<body>
+    <h1>Vraag 4</h1> 
+<p>Stel je hebt een relatie en je neemt een kind. 1 maand een kind nemen kost gemiddeld  €912 volgens geldzaken.nl. Hoelang kan je je kind opvoeden voor €1000</p>
+<textarea id="Vraag" style="height: fit-content; width: 100px; float: left;"></textarea> <p> Dag</p><br>
+    <button id="Antwoordknop" onclick="Antwoord()">Antwoord</button>
+    <button id="VolgendeVraag" style="display: none;"><a href="politiek5.html">Volgende vraag</a></button>
+    <p id="Antwoord"></p>
+    <script>
+    function Antwoord() {
+    var vraag = document.getElementById('Vraag').value.trim();
+    var Antwoord = document.getElementById('Antwoord');
+    if (vraag === '') {
+      Antwoord.innerHTML = '';
+    } else if (parseInt(vraag) === 1) {
+      Antwoord.innerHTML = 'Klopt. Kan je kind een dag lang opvoeden zonder geldzorgen. Daarna is het voor eigen rekening. Als je weinig geld hebt kan je gelukkig nog €291,49 aan kinderbijslag krijgen.';
+      document.getElementById('VolgendeVraag').style.display = 'block';
+      document.getElementById('Antwoordknop').style.display = 'none';
+    } else {
+      Antwoord.innerHTML = 'Een foutje moet kunnen. Maar een goede actvist checkt zijn werk. Anders neemt niemand hem meer serieus';
+    }
+    }
+    </script>
+    </body>
+    </html>

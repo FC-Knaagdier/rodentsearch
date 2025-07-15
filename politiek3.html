@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+   <meta charset="utf-8">
+</head>
+<body>
+    <h1>Vraag 3</h1> 
+<p>Geert Wilhout wil alle Moslims Beverwijk uithebben. In Beverwijk wonen ongeveer 18 miljoen knaagdieren. 1 miljoen daarvan is moslim. Stel iedereen werkt in Beverwijk. Hoeveel banen raken er hierdoor kwijt.</p>
+<textarea style="float: left;" id="Vraag"></textarea><p> Banen</p><br>
+    <button id="Antwoordknop" onclick="Antwoord()">Antwoord</button>
+    <button id="VolgendeVraag" style="display: none;"><a href="politiek4.html">Volgende vraag</a></button>
+    <p id="Antwoord"></p>
+    <script>
+    function Antwoord() {
+    var vraag = document.getElementById('Vraag').value.trim();
+    var Antwoord = document.getElementById('Antwoord');
+    if (vraag === '') {
+      Antwoord.innerHTML = '';
+    } else if (parseInt(vraag) === 1000000) {
+      Antwoord.innerHTML = 'Klopt. Maar de SGP heeft de oplossing zeggen ze. €1000 geven per geboren kind.';
+      document.getElementById('VolgendeVraag').style.display = 'block';
+      document.getElementById('Antwoordknop').style.display = 'none';
+    } else {
+      Antwoord.innerHTML = 'Een foutje moet kunnen. Maar een goede actvist checkt zijn werk. Anders neemt niemand hem meer serieus';
+    }
+    }
+    </script>
+    </body>
+    </html>
